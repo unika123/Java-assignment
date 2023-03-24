@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bracket Checker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>	<div class="container my-5">
+    <h1>Bracket Checker</h1>
+
+	<form>
+        <div class="form-group">
+            <label for="brackets">Enter a string of brackets:</label>
+            <input type="text" class="form-control" id="brackets" name="brackets">
+        </div>
+        <button type="submit" class="btn btn-primary">Check</button>
+    </form><div id="output" class="mt-3"></div>
+</div>
+	<script>
+		function checkBrackets(str) {
+		  const stack = [];
+		  for (let i = 0; i < str.length; i++) {
+		    if (str[i] === '(' || str[i] === '[' || str[i] === '{') {
+		      stack.push(str[i]);
+		    } else if (str[i] === ')' && stack[stack.length - 1] === '(') {
+		      stack.pop();
+		    } else if (str[i] === ']' && stack[stack.length - 1] === '[') {
+		      stack.pop();
+		    } else if (str[i] === '}' && stack[stack.length - 1] === '{') {
+		      stack.pop();
+		    } else {
+		      return false;
+		    }
+		  }
+		  return stack.length === 0;
+		}
+
+		const form = document.querySelector('form');
+		form.addEventListener('submit', (event) => {
+		  event.preventDefault();
+		  const input = document.querySelector('#brackets').value;
+		  const result = checkBrackets(input);
+		  const output = document.querySelector('#output');
+		  if (result) {
+		    output.textContent = 'Yes, as input brackets are balanced.';
+		    output.style.color = 'green';
+		  } else {
+		    output.textContent = 'NO, as input brackets are balanced.';
+		    output.style.color = 'red';
+		  }
+		});
+	</script>
+</body>
+</html>
